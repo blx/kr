@@ -12,6 +12,10 @@ import (
 )
 import "strings"
 
+func ServeDashboard() {
+	C.serve_dashboard()
+}
+
 func AdminSeedAndTeamCheckpointExists() bool {
 	return bool(C.team_public_key_and_checkpoint_exists())
 }
