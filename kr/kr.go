@@ -589,7 +589,7 @@ func main() {
 			Flags: []cli.Flag{
 				cli.BoolFlag{
 					Name:  "force",
-					Usage: "Do not ask for confirmation to unpair a currently paired device.",
+					Usage: "Do not ask for confirmation to unpair a currently paired device",
 				},
 				cli.StringFlag{
 					Name:  "name, n",
@@ -616,7 +616,7 @@ func main() {
 			Flags: []cli.Flag{
 				cli.BoolFlag{
 					Name:  "interactive,i",
-					Usage: "Prompt before each step.",
+					Usage: "Prompt before each step",
 				},
 			},
 			Action: codesignCommand,
@@ -665,7 +665,7 @@ func main() {
 					Flags: []cli.Flag{
 						cli.StringFlag{
 							Name:  "name,n",
-							Usage: "team name",
+							Usage: "Team name",
 						},
 					},
 				},
@@ -688,6 +688,17 @@ func main() {
 					Name:   "close-invitations",
 					Usage:  "Close all outstanding invitation links.",
 					Action: closeInvitationsCommand,
+				},
+				cli.Command{
+					Name:   "remove",
+					Usage:  "Remove a member from the team.",
+					Action: removeMemberCommand,
+					Flags: []cli.Flag{
+						cli.StringFlag{
+							Name:  "email,e",
+							Usage: "Member's email",
+						},
+					},
 				},
 				cli.Command{
 					Name:   "members",
@@ -719,11 +730,11 @@ func main() {
 							Flags: []cli.Flag{
 								cli.StringFlag{
 									Name:  "host",
-									Usage: "(Optional) Host name or SSH alias. By default all hosts' pinned keys are returned.",
+									Usage: "(Optional) Host name or SSH alias. By default all hosts' pinned keys are returned",
 								},
 								cli.BoolFlag{
 									Name:  "search",
-									Usage: "(Optional) Treats --host flag as a search instead of exact match.",
+									Usage: "(Optional) Treats --host flag as a search instead of exact match",
 								},
 							},
 						},
@@ -738,11 +749,11 @@ func main() {
 								},
 								cli.StringFlag{
 									Name:  "public-key",
-									Usage: "(Optional) Public key to pin. If unset, parses keys from local known_hosts file.",
+									Usage: "(Optional) Public key to pin. If unset, parses keys from local known_hosts file",
 								},
 								cli.BoolFlag{
 									Name:  "update-from-server",
-									Usage: "(Optional) Update list of known keys from this server before pinning.",
+									Usage: "(Optional) Update list of known keys from this server before pinning",
 								},
 							},
 						},
@@ -774,7 +785,7 @@ func main() {
 							Flags: []cli.Flag{
 								cli.StringFlag{
 									Name:  "email",
-									Usage: "Member's email.",
+									Usage: "Member's email",
 								},
 							},
 						},
@@ -785,7 +796,7 @@ func main() {
 							Flags: []cli.Flag{
 								cli.StringFlag{
 									Name:  "email",
-									Usage: "Admin's email.",
+									Usage: "Admin's email",
 								},
 							},
 						},
@@ -818,12 +829,6 @@ func main() {
 					Name:   "logs",
 					Usage:  "Stream team audit logs.",
 					Action: viewLogs,
-					// Flags: []cli.Flag{
-					// 	cli.StringFlag{
-					// 		Name:  "query,q",
-					// 		Usage: "Filter logs with a query string",
-					// 	},
-					// },
 				},
 				cli.Command{
 					Name:  "edit-logging",
@@ -860,11 +865,11 @@ func main() {
 			Flags: []cli.Flag{
 				cli.BoolFlag{
 					Name:  "print",
-					Usage: "Print Krypton SSH config block.",
+					Usage: "Print Krypton SSH config block",
 				},
 				cli.BoolFlag{
 					Name:  "force",
-					Usage: "Force append the Krypton SSH config block even if other Krypton-related lines are present.",
+					Usage: "Force append the Krypton SSH config block even if other Krypton-related lines are present",
 				},
 			},
 		},
@@ -875,7 +880,7 @@ func main() {
 			Flags: []cli.Flag{
 				cli.BoolFlag{
 					Name:  "dry-run, d",
-					Usage: "Do a dry-run and preview all servers that kr will try to add the new public key too.",
+					Usage: "Do a dry-run and preview all servers that kr will try to add the new public key too",
 				},
 			},
 		},

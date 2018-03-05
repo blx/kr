@@ -59,12 +59,6 @@ func createInviteCommand(c *cli.Context) (err error) {
 	emails := strings.Split(c.String("emails"), ",")
 	domain := c.String("domain")
 	if domain != "" {
-
-		domain := c.String("domain")
-		if domain == "" {
-			PrintFatal(os.Stderr, "Supply a valid email domain")
-			return
-		}
 		_, err := mail.ParseAddress("x@" + domain)
 		if err != nil {
 			PrintFatal(os.Stderr, "Email domain "+domain+" is invalid.")
@@ -98,6 +92,23 @@ func closeInvitationsCommand(c *cli.Context) (err error) {
 	exitIfNotOnTeam()
 
 	kr.CancelInvite()
+	return
+}
+
+func removeMemberCommand(c *cli.Context) (err error) {
+	exitIfNotOnTeam()
+
+	email := c.String("e")
+	if email == "" {
+		PrintFatal(os.Stderr, "--email is required")
+	}
+
+	address, err := mail.ParseAddress(email)
+	if err != nil {
+		PrintFatal(os.Stderr, "Email "+email+" is invalid.")
+		return err
+	}
+	kr.RemoveMemberCommand(address.Address)
 	return
 }
 

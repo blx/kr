@@ -38,6 +38,13 @@ func CancelInvite() {
 	C.cancel_invite()
 }
 
+func RemoveMemberCommand(email string) {
+	emailSlice := []byte(email)
+	bytes := C.CBytes(emailSlice)
+	C.remove_member((*C.uint8_t)(bytes), C.uintptr_t(len(emailSlice)))
+	C.free(bytes)
+}
+
 func SetTeamName(name string) {
 	nameSlice := []byte(name)
 	bytes := C.CBytes(nameSlice)
