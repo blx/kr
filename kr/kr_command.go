@@ -138,12 +138,17 @@ func setPolicyCommand(c *cli.Context) (err error) {
 func getMembersCommand(c *cli.Context) (err error) {
 	exitIfNotOnTeam()
 
-	var query *string
-	if c.String("query") != "" {
-		queryStr := c.String("query")
-		query = &queryStr
+	var email *string
+	if c.String("email") != "" {
+		emailStr := c.String("email")
+		address, err := mail.ParseAddress(emailStr)
+		if err != nil {
+			PrintFatal(os.Stderr, "Email "+emailStr+" is invalid.")
+			return err
+		}
+		email = &address.Address
 	}
-	kr.GetMembers(query, c.Bool("ssh"), c.Bool("pgp"))
+	kr.GetMembers(email, c.Bool("ssh"), c.Bool("pgp"))
 	return
 }
 

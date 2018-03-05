@@ -706,8 +706,8 @@ func main() {
 					Action: getMembersCommand,
 					Flags: []cli.Flag{
 						cli.StringFlag{
-							Name:  "query,q",
-							Usage: "Filter by email",
+							Name:  "email,e",
+							Usage: "Find user by email",
 						},
 						cli.BoolFlag{
 							Name:  "ssh,s",

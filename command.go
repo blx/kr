@@ -56,11 +56,11 @@ func SetApprovalWindow(approval_window *int64) {
 	C.set_policy((*C.int64_t)(approval_window))
 }
 
-func GetMembers(query *string, printSSHPubkey bool, printPGPPubkey bool) {
-	if query != nil {
-		querySlice := []byte(*query)
-		bytes := C.CBytes(querySlice)
-		C.get_members((*C.uint8_t)(bytes), C.uintptr_t(len(querySlice)),
+func GetMembers(email *string, printSSHPubkey bool, printPGPPubkey bool) {
+	if email != nil {
+		emailSlice := []byte(*email)
+		bytes := C.CBytes(emailSlice)
+		C.get_members((*C.uint8_t)(bytes), C.uintptr_t(len(emailSlice)),
 			C._Bool(printSSHPubkey), C._Bool(printPGPPubkey))
 		C.free(bytes)
 	} else {
