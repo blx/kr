@@ -379,3 +379,43 @@ func RequestNoOp() (err error) {
 	defer daemonConn.Close()
 	return requestNoOpOver(daemonConn)
 }
+
+func requestDashboardOver(conn net.Conn) (err error) {
+	getDashboard, err := http.NewRequest("GET", "/dashboard", nil)
+	if err != nil {
+		return
+	}
+	err = getDashboard.Write(conn)
+	if err != nil {
+		err = fmt.Errorf("Daemon Write error: %s", err.Error())
+		return
+	}
+
+	responseReader := bufio.NewReader(conn)
+	httpResponse, err := http.ReadResponse(responseReader, getDashboard)
+	if err != nil {
+		err = kr.ErrConnectingToDaemon
+		return
+	}
+	defer httpResponse.Body.Close()
+	if httpResponse.StatusCode != http.StatusOK {
+		err = kr.ErrConnectingToDaemon
+		return
+	}
+
+	return
+}
+
+func RequestDashboard() (err error) {
+	unixFile, err := kr.KrDirFile(kr.DAEMON_SOCKET_FILENAME)
+	if err != nil {
+		return
+	}
+	daemonConn, err := kr.DaemonDialWithTimeout(unixFile)
+	if err != nil {
+		err = fmt.Errorf("DaemonDialWithTimeout error: %s", err.Error())
+		return
+	}
+	defer daemonConn.Close()
+	return requestDashboardOver(daemonConn)
+}

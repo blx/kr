@@ -12,10 +12,6 @@ import (
 )
 import "strings"
 
-func ServeDashboard() {
-	C.serve_dashboard()
-}
-
 func AdminSeedAndTeamCheckpointExists() bool {
 	return bool(C.team_public_key_and_checkpoint_exists())
 }
@@ -147,4 +143,12 @@ func ViewLogs(query string) {
 	queryBytes := C.CBytes(querySlice)
 	defer C.free(queryBytes)
 	C.view_logs((*C.uint8_t)(queryBytes), C.uintptr_t(len(querySlice)), C._Bool(false), C._Bool(false))
+}
+
+func ServeDashboard() bool {
+	return (bool)(C.serve_dashboard())
+}
+
+func ServeDashboardIfParamsPresent() bool {
+	return (bool)(C.serve_dashboard_if_params_present())
 }

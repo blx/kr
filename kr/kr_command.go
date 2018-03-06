@@ -3,10 +3,13 @@ package main
 import (
 	"bufio"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/kryptco/kr"
 	"github.com/kryptco/kr/krdclient"
@@ -253,5 +256,41 @@ func teamBillingCommand(c *cli.Context) (err error) {
 	exitIfNotOnTeam()
 
 	kr.OpenBilling()
+	return
+}
+
+type DashboardParams struct {
+	Port  uint16 `json:"port"`
+	Token []byte `json:"token"`
+}
+
+func teamDashboardCommand(c *cli.Context) (err error) {
+	exitIfNotOnTeam()
+	err = krdclient.RequestDashboard()
+	if err != nil {
+		PrintFatal(os.Stderr, err.Error())
+	}
+
+	f, err := kr.KrDirFile("dashboard_params")
+	if err != nil {
+		PrintFatal(os.Stderr, err.Error())
+	}
+
+	paramsJson, err := ioutil.ReadFile(f)
+	if err != nil {
+		PrintFatal(os.Stderr, err.Error())
+	}
+	var params DashboardParams
+	err = json.Unmarshal(paramsJson, &params)
+	if err != nil {
+		PrintFatal(os.Stderr, err.Error())
+	}
+
+	link := fmt.Sprintf("http://localhost:%d/#%s", params.Port, base64.URLEncoding.EncodeToString(params.Token))
+	PrintErr(os.Stderr, kr.Cyan(fmt.Sprintf("Krypton ▶ Dashboard running at %s", link)))
+	<-time.After(time.Millisecond * 750)
+	PrintErr(os.Stderr, kr.Cyan("Krypton ▶ Opening web browser..."))
+	<-time.After(time.Millisecond * 750)
+	openBrowser(link)
 	return
 }

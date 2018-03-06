@@ -87,7 +87,7 @@ func main() {
 	log.Notice("krd launched and listening on UNIX socket")
 
 	go func() {
-		kr.ServeDashboard()
+		kr.ServeDashboardIfParamsPresent()
 	}()
 
 	stopSignal := make(chan os.Signal, 1)

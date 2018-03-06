@@ -41,6 +41,7 @@ func (cs *ControlServer) HandleControlHTTP(listener net.Listener) (err error) {
 	httpMux.HandleFunc("/pair", cs.handlePair)
 	httpMux.HandleFunc("/enclave", cs.handleEnclave)
 	httpMux.HandleFunc("/ping", cs.handlePing)
+	httpMux.HandleFunc("/dashboard", cs.handleDashboard)
 	err = http.Serve(listener, httpMux)
 	return
 }
@@ -226,6 +227,11 @@ func (cs *ControlServer) handleEnclaveGeneric(w http.ResponseWriter, enclaveRequ
 }
 
 func (cs *ControlServer) handlePing(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+}
+
+func (cs *ControlServer) handleDashboard(w http.ResponseWriter, r *http.Request) {
+	kr.ServeDashboard()
 	w.WriteHeader(http.StatusOK)
 }
 

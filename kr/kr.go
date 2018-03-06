@@ -846,6 +846,11 @@ func main() {
 					Usage:  "Manage Krypton Teams billing.",
 					Action: teamBillingCommand,
 				},
+				cli.Command{
+					Name:   "dashboard",
+					Usage:  "Start the local dashboard and open it in the default web browser.",
+					Action: teamDashboardCommand,
+				},
 			},
 		},
 		cli.Command{
