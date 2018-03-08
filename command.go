@@ -41,6 +41,10 @@ func SetTeamName(name string) {
 	C.free(bytes)
 }
 
+func GetPolicy() {
+	C.get_policy()
+}
+
 func SetApprovalWindow(approval_window *int64) {
 	C.set_policy((*C.int64_t)(approval_window))
 }

@@ -799,6 +799,7 @@ func main() {
 				cli.Command{
 					Name:  "policy",
 					Usage: "View your team's policy.",
+					Action: getPolicyCommand,
 					Subcommands: []cli.Command{
 						cli.Command{
 							Name:   "set",

@@ -112,6 +112,13 @@ func viewLogs(c *cli.Context) (err error) {
 	return
 }
 
+func getPolicyCommand(c *cli.Context) (err error) {
+	exitIfNotOnTeam()
+
+	kr.GetPolicy()
+	return
+}
+
 func setPolicyCommand(c *cli.Context) (err error) {
 	exitIfNotOnTeam()
 
